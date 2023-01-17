@@ -1,4 +1,4 @@
-# 二维数据编码
+# 2D data encoding
 def adpcm_encoder(raw_y):
     IndexTable = [-1, -1, -1, -1, 2, 4, 6, 8, -1, -1, -1, -1, 2, 4, 6, 8]
 
@@ -30,7 +30,7 @@ def adpcm_encoder(raw_y):
         while n_2 < Ns_2:
             predsample = prevsample
             index = previndex
-            step = StepSizeTable[index]  # MATLAB索引从1开始，python索引从0开始
+            step = StepSizeTable[index]  # MATLAB indexing starts at 1, python indexing starts at 0
 
             diff = raw_y_2[n_1][n_2] - predsample
             if diff >= 0:
@@ -41,9 +41,9 @@ def adpcm_encoder(raw_y):
 
             tempstep = step
             if diff >= tempstep:
-                code = code | 4  # 按位或
+                code = code | 4  # bitwise or
                 diff = diff - tempstep
-            tempstep = tempstep >> 1  # 按位移动指定位置
+            tempstep = tempstep >> 1  # Move the specified position bit by bit
             if diff >= tempstep:
                 code = code | 2
                 diff = diff - tempstep
@@ -52,7 +52,7 @@ def adpcm_encoder(raw_y):
                 code = code | 1
 
             diffq = step >> 3
-            if code & 4:  # 按位与
+            if code & 4:  # bitwise and
                 diffq = diffq + step
             if code & 2:
                 diffq = diffq + (step >> 1)

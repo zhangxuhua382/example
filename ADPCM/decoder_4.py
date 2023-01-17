@@ -1,4 +1,4 @@
-# 高维数据解码
+# High-dimensional data decoding
 def adpcm_decoder(adpcm_y):
     IndexTable = [-1, -1, -1, -1, 2, 4, 6, 8, -1, -1, -1, -1, 2, 4, 6, 8]
 

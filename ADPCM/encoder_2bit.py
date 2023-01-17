@@ -1,4 +1,4 @@
-# 32bit数据编码为2bit数据
+# 32bit data encoded as 2bit data
 def adpcm_encoder(raw_y):
     adpcm_y = []
     raw_y_1 = []
@@ -24,7 +24,7 @@ def adpcm_encoder(raw_y):
     while n < Ns:
         predsample = prevsample
         index = previndex
-        step = StepSizeTable[index]  # MATLAB索引从1开始，python索引从0开始
+        step = StepSizeTable[index]  # MATLAB indexing starts at 1, python indexing starts at 0
 
         diff = raw_y_1[n] - predsample
         if diff >= 0:
@@ -35,10 +35,10 @@ def adpcm_encoder(raw_y):
 
         tempstep = step
         if diff >= tempstep:
-            code = code | 1  # 按位或
+            code = code | 1  # bitwise or
 
         diffq = step >> 1
-        if code & 1:  # 按位与
+        if code & 1:  # bitwise and
             diffq = diffq + step
 
         if code & 2:

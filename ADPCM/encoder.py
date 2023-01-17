@@ -1,4 +1,4 @@
-# 32bit数据编码为4bit数据
+# 32bit data encoded as 4bit data
 def adpcm_encoder(raw_y):
     adpcm_y = []
     raw_y_1 = []
@@ -19,9 +19,9 @@ def adpcm_encoder(raw_y):
                      8630, 9493, 10442, 11487, 12635, 13899, 15289,
                      16818, 18500, 20350, 22385, 24623, 27086, 29794, 32767]
 
-    # 初始化预测样本
+    # Initialize prevsample
     prevsample = 0
-    # 初始化索引
+    # Initialize index
     previndex = 0
 
     Ns = len(raw_y)
@@ -34,22 +34,22 @@ def adpcm_encoder(raw_y):
     while n < Ns:
         predsample = prevsample
         index = previndex
-        step = StepSizeTable[index]  # MATLAB索引从1开始，python索引从0开始
+        step = StepSizeTable[index]  # MATLAB indexing starts at 1, python indexing starts at 0
 
         diff = raw_y_1[n] - predsample
-        # 判断差值是否为正数并对最高位编码
+        # Determine whether the difference is a positive number and encode the highest bit
         if diff >= 0:
             code = 0
         else:
             code = 8
             diff = -diff
 
-        # 分别对每个bit位编码
+        # Encode each bit separately
         tempstep = step
         if diff >= tempstep:
-            code = code | 4  # 按位或
+            code = code | 4  # bitwise or
             diff = diff - tempstep
-        tempstep = tempstep >> 1  # 按位移动指定位置
+        tempstep = tempstep >> 1  # Move the specified position bit by bit
         if diff >= tempstep:
             code = code | 2
             diff = diff - tempstep
@@ -57,37 +57,37 @@ def adpcm_encoder(raw_y):
         if diff >= tempstep:
             code = code | 1
 
-        # 进行差值预测
+        # Make difference forecasts
         diffq = step >> 3
-        if code & 4:  # 按位与
+        if code & 4:  # bitwise and
             diffq = diffq + step
         if code & 2:
             diffq = diffq + (step >> 1)
         if code & 1:
             diffq = diffq + (step >> 2)
 
-        # 预测的差值进行更新
+        # The predicted difference is updated
         if code & 8:
             predsample = predsample - diffq
         else:
             predsample = predsample + diffq
 
-        # 对样本数据进行最大最小值处理
+        # Perform maximum and minimum processing on predsample
         if predsample > 32767:
             predsample = 32767
         elif predsample < -32768:
             predsample = -32768
 
-        # 对步长索引进行更新
+        # Update the step index
         index = index + IndexTable[code]
 
-        # 对步长索引进行最大最小值处理
+        # Maximize and minify the step index
         if index < 0:
             index = 0
         if index > 88:
             index = 88
 
-        # 进行预测值更新
+        # Make forecast update
         prevsample = predsample
         previndex = index
 

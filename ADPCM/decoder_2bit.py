@@ -1,4 +1,4 @@
-# 2bit数据解码为32bit数据
+# 2bit data is decoded into 32bit data
 def adpcm_decoder(adpcm_y):
     raw_y = []
 
