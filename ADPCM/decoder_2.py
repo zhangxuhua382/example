@@ -1,3 +1,4 @@
+# 二维数据解码
 def adpcm_decoder(adpcm_y):
     IndexTable = [-1, -1, -1, -1, 2, 4, 6, 8, -1, -1, -1, -1, 2, 4, 6, 8]
 
@@ -12,7 +13,6 @@ def adpcm_decoder(adpcm_y):
 
     Ns_1 = len(adpcm_y)
     Ns_2 = len(adpcm_y[0])
-
 
     raw_y_2 = []
     n_1 = 0

@@ -1,8 +1,4 @@
-
-
-
-# raw_y = []
-
+# 4bit数据解码为32bit数据
 def adpcm_decoder(adpcm_y):
     raw_y = []
 
@@ -26,6 +22,7 @@ def adpcm_decoder(adpcm_y):
         step = StepSizeTable[index]
         code = adpcm_y[n]
 
+        # 分别对每个bit位编码
         diffq = step >> 3
         if code & 4:
             diffq = diffq + step
@@ -34,26 +31,32 @@ def adpcm_decoder(adpcm_y):
         if code & 1:
             diffq = diffq + (step >> 2)
 
+        # 判断编码最高位是否为正数
         if code & 8:
             predsample = predsample - diffq
         else:
             predsample = predsample + diffq
 
+        # 对样本数据进行最大最小值处理
         if predsample > 32767:
             predsample = 32767
         elif predsample < -32768:
             predsample = -32768
 
+        # 对步长索引进行更新
         index = index + IndexTable[code]
 
+        # 对步长索引进行最大最小值处理
         if index < 1:
             index = 1
         if index > 89:
             index = 89
 
+        # 进行预测值更新
         prevsample = predsample
         previndex = index
 
+        # 存储编码值
         a = predsample / 32767
         raw_y.append(a)
         n = n + 1

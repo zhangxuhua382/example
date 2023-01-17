@@ -1,9 +1,4 @@
-
-
-
-# adpcm_y = []
-# raw_y_1 = []
-
+# 32bit数据编码为3bit数据
 def adpcm_encoder(raw_y):
     adpcm_y = []
     raw_y_1 = []

@@ -1,3 +1,4 @@
+# 二维数据编码
 def adpcm_encoder(raw_y):
     IndexTable = [-1, -1, -1, -1, 2, 4, 6, 8, -1, -1, -1, -1, 2, 4, 6, 8]
 
@@ -13,7 +14,6 @@ def adpcm_encoder(raw_y):
     Ns_1 = len(raw_y)
     Ns_2 = len(raw_y[0])
 
-
     raw_y_2 = []
     # raw_y = 32767 * raw_y  # 16 - bit operation
     for i in range(len(raw_y)):
@@ -21,7 +21,6 @@ def adpcm_encoder(raw_y):
         for j in range(len(raw_y[0])):
             raw_y_1.append(32767*raw_y[i][j])
         raw_y_2.append(raw_y_1)
-
 
     adpcm_y_2 = []
     n_1 = 0
